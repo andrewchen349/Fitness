@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "428786131477",
+    "firebase_url": "https://fitness-de093.firebaseio.com",
+    "project_id": "fitness-de093",
+    "storage_bucket": "fitness-de093.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428786131477:android:75de9996117b6d63",
+        "android_client_info": {
+          "package_name": "com.example.andre.basicfitness"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhtCRX_Yiod-qooKAVWCG5WdUdui6Yopg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "428786131477-06g35umjr1m2iun19qemp78jvq0mrtem.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
