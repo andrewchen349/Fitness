@@ -31,17 +31,22 @@ public class main_page1 extends AppCompatActivity  {
     private SensorManager sensorManager;  //declare sensorManager
     private Sensor stepSensor; //declare a stepSensor
     private SensorEventListener stepSensorListener;
-    private long steps = 0;
+    long steps = 0;
     public TextView distanceTraveled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        System.out.println("Value of steps BEFORE: " + (float) steps);
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page1);
 
         firebaseAuth = FirebaseAuth.getInstance();
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);  //initializes sensorManager
         stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR); //intializes step Senser
+
         stepSensorListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
@@ -56,14 +61,22 @@ public class main_page1 extends AppCompatActivity  {
 
                 if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
                     steps++;
+                    System.out.println(steps);
+                    calculateDistance(steps);
+                    getDistance();
                 }
+
+
             }
+
 
             @Override
             public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
             }
         };
+
+
 
         //if user is not signed in
         if(firebaseAuth.getCurrentUser() == null){
@@ -85,9 +98,12 @@ public class main_page1 extends AppCompatActivity  {
         });
 
         distanceTraveled = (TextView) findViewById((R.id.distance));
-        getDistance();
+        /*System.out.println("Value of steps: " + steps);
+        //calculateDistance(steps);
+        //getDistance();*/
 
     }
+
 
     @Override
     protected void onResume() {
@@ -104,14 +120,17 @@ public class main_page1 extends AppCompatActivity  {
         sensorManager.unregisterListener(stepSensorListener);
     }
 
-    private float calculateDistance(long steps){
-        float totalDistance = (float)(steps*31)/(float)63360; //calculate distance in miles
+    public float calculateDistance(long steps){
+        float totalDistance = (float)(steps*31)/(float)12; //calculate distance in miles
+        System.out.println("Total Distance: " + totalDistance);
         return totalDistance;
     }
 
-    private void getDistance(){
+    public void getDistance(){
         float totalDist = calculateDistance((long) steps);
-        System.out.println(totalDist);
-        distanceTraveled.setText(String.valueOf(totalDist));
+        //System.out.println(totalDist);
+        distanceTraveled.setText(String.valueOf(totalDist + "feet"));
     }
+
+
 }
