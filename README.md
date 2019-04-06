@@ -1,2 +1,2 @@
 # Fitness
-Basic Fitness App
+Basic Fitness App for DataCubed Health Internship
