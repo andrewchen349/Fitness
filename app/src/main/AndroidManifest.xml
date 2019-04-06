@@ -18,7 +18,6 @@
         </activity>
         <activity android:name=".Register" />
         <activity android:name=".main_page1" />
-        <activity android:name=".MainPage"></activity>
     </application>
 
 </manifest>

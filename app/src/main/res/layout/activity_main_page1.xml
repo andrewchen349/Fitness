@@ -17,7 +17,22 @@
         <Button
             android:id="@+id/logout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="LogOut"/>
+        <EditText
+            android:id="@+id/workLocation"
+            android:layout_width="302dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/buttonstyle"
+            android:hint=" Enter Work Location" />
+        <TextView
+            android:id="@+id/distance"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"/>
     </LinearLayout>
 
 </RelativeLayout>
