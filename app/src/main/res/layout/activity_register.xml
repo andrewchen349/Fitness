@@ -37,7 +37,7 @@
             android:background="@drawable/buttonstyle"
             android:hint=" Password" />
         <Button
-            android:id="@+id/login"
+            android:id="@+id/register"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -46,4 +46,4 @@
             android:text="Register"/>
     </LinearLayout>
 
-</RelativeLayout>
+    </RelativeLayout>

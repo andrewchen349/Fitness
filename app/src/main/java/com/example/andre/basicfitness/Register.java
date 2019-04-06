@@ -60,7 +60,7 @@ public class Register extends AppCompatActivity {
 
         email = (EditText)findViewById(R.id.email);
         password = (EditText)findViewById((R.id.password));
-        register = (Button)findViewById((R.id.login));
+        register = (Button)findViewById((R.id.register));
     }
 
     private Boolean validate(){
