@@ -1,5 +1,12 @@
 package com.example.andre.basicfitness;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.os.Build;
+import android.support.v4.app.NotificationCompatExtras;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
@@ -23,6 +30,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.app.Activity;
+import android.support.v4.app.NotificationCompat;
 
 public class main_page1 extends AppCompatActivity  {
 
@@ -34,14 +42,17 @@ public class main_page1 extends AppCompatActivity  {
     long steps = 0;
     public TextView distanceTraveled;
 
+    public static final String CHANNEL_ID = "ChannelNoti";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        System.out.println("Value of steps BEFORE: " + (float) steps);
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page1);
+        createNotificationChannel();
+
+        //milestoneNotification = new NotificationCompat.Builder(this);
+       // milestoneNotification.setAutoCancel(true); //closes notification when  clicked
+        //notificationManager = NotificationManagerCompat.from(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);  //initializes sensorManager
@@ -64,6 +75,7 @@ public class main_page1 extends AppCompatActivity  {
                     System.out.println(steps);
                     calculateDistance(steps);
                     getDistance();
+                    mileStoneNotification1();
                 }
 
 
@@ -101,6 +113,7 @@ public class main_page1 extends AppCompatActivity  {
         /*System.out.println("Value of steps: " + steps);
         //calculateDistance(steps);
         //getDistance();*/
+        //mileStoneNotification1();
 
     }
 
@@ -132,5 +145,73 @@ public class main_page1 extends AppCompatActivity  {
         distanceTraveled.setText(String.valueOf(totalDist + "feet"));
     }
 
+    private NotificationManagerCompat notificationManager;
+    private static final int id = 12451;  //unique id to milestone Notification
+
+    public void mileStoneNotification1(){
+
+        float totalDistance = calculateDistance((long) steps);
+        //System.out.println("This is the mile stone distance" + totalDistance);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
+
+        if(totalDistance == 1000){
+
+            //build notification
+            builder.setSmallIcon(R.drawable.notilogo);
+            builder.setTicker("Congrats You Have Walk 1000 ft");
+            builder.setWhen(System.currentTimeMillis());
+            builder.setContentTitle("New Achievement!");
+            builder.setContentText("Congrats on Your Achievement");
+            builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+            builder.setAutoCancel(true);
+
+            Intent intent = new Intent(this, main_page1.class);
+            PendingIntent pt = PendingIntent.getActivity(this, 0, intent, 0);
+            builder.setContentIntent(pt);
+
+            //send notification
+            NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+            //NotificationManager nm  = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            notificationManagerCompat.notify(id, builder.build());
+
+
+        }
+        else if((totalDistance % 1000) == 0){
+            //also build notification
+            builder.setSmallIcon(R.drawable.notilogo);
+            builder.setTicker("Congrats You Have Walk 1000 More ft");
+            builder.setWhen(System.currentTimeMillis());
+            builder.setContentTitle("New Achievement!");
+            builder.setContentText("Congrats on Your Achievement");
+            builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+            builder.setAutoCancel(true);
+
+            Intent intent = new Intent(this, main_page1.class);
+            PendingIntent pt = PendingIntent.getActivity(this, 0, intent, 0);
+            builder.setContentIntent(pt);
+
+            //send notification
+            NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+            //NotificationManager nm  = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            notificationManagerCompat.notify(id, builder.build());
+        }
+
+    }
+
+    //Notification Channel
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "MileStone";
+            String description = "Milestone Notification";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,name, NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription("Channel for Notification");
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
 }
