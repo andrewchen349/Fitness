@@ -29,6 +29,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,6 +46,7 @@ import android.app.Activity;
 import android.support.v4.app.NotificationCompat;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -375,12 +379,20 @@ public class main_page1 extends AppCompatActivity {
         //use AlarmManager Library
         //Create notification
 
-        Intent intent = new Intent(this, main_page1.class);
-        PendingIntent pt = PendingIntent.getActivity(this, 0, intent, 0);
+        Intent intent = new Intent(getApplicationContext(), Notification_receiver.class);
+        PendingIntent pt = PendingIntent.getBroadcast(getApplicationContext(), 100, intent,PendingIntent.FLAG_UPDATE_CURRENT);
         //builder.setContentIntent(pt);
 
+        Calendar calendar = Calendar.getInstance();
+        int currentHourIn24Format = calendar.get(Calendar.HOUR_OF_DAY);
+        int currentMinIn24Format = calendar.get(Calendar.MINUTE);
+        int currentSecIn24Format = calendar.get(Calendar.SECOND);
+        calendar.set(Calendar.HOUR_OF_DAY, currentHourIn24Format);
+        calendar.set(Calendar.MINUTE, currentMinIn24Format);
+        calendar.set(Calendar.SECOND, currentSecIn24Format);
+
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE); //intialize alarmManager
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, 36000,AlarmManager.INTERVAL_HOUR, pt);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),AlarmManager.INTERVAL_HOUR, pt);
     }
 
     private Boolean validate(){
