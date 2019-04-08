@@ -64,67 +64,8 @@ public class main_page1 extends AppCompatActivity {
     private LocationManager locationManager;  //Initialize Location manager
     private LocationListener locationListener;
     private boolean b = false;
-
-
-
-
-    /*String userAddress = userWork.getText().toString().trim();
-
-    Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-    List<Address> addresses;
-
-    {
-        try {
-            addresses = geocoder.getFromLocationName(userAddress, 1);
-            Address address = addresses.get(0);
-            if(addresses.size() > 0) {
-                double latitudeU = addresses.get(0).getLatitude();
-                double longitudeU = addresses.get(0).getLongitude();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-   /*LocationListener locationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(Location location) {
-            double lat = location.getLatitude();  //get latitude of user
-            double lon = location.getLongitude();  //get longitude of user
-
-            float [] results = new float[1];
-
-            String userAddress = userWork.getText().toString().trim();
-            Location.distanceBetween(lat, lon, addresses.get(0).getLatitude(), addresses.get(0).getLongitude(),results);
-            float dist = results[0];
-
-            if(dist < 0.1){
-                b = true;
-                reminderToWalk();
-            }
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-
-        }
-
-        //checks if GPS is turned off
-        @Override
-        public void onProviderDisabled(String provider) {
-
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
-
-        }
-    };*/
-
-    public static final String CHANNEL_ID = "ChannelNoti"; //CHANNEl_ID for milestones
-    public static final String CHANNEL_ID1 = "Work";
+    public static final String CHANNEL_ID = "ChannelNoti"; //CHANNEl_ID for milestones(NotificationChannel)
+    public static final String CHANNEL_ID1 = "Work"; //Channel ID for reminder to walk Notification Channel
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,30 +103,24 @@ public class main_page1 extends AppCompatActivity {
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE); //initializes a Location Manager
         locationListener = new LocationListener() {
-
-
             @Override
             public void onLocationChanged(Location location) {
                 double lat = location.getLatitude();  //get latitude of user
                 double lon = location.getLongitude();  //get longitude of user
                 float [] results = new float[1];
 
-
-                //String userAddress = userWork.getText().toString().trim();
                 Location.distanceBetween(lat, lon, getLociLat() , getLociLong(),results);
                 float dist = results[0];
-
+                //if distance between user is less than 0.1 meters
                 if(dist < 0.1){
                     b = true;
                     reminderToWalk();
                 }
             }
-
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
 
             }
-
             @Override
             public void onProviderEnabled(String provider) {
 
@@ -213,20 +148,15 @@ public class main_page1 extends AppCompatActivity {
                 } ,10);
                 return;
             }
-
             else{
                 configureButton();
             }
-
         }
         else{
             configureButton();
         }
 
-        //onRequestPermissionsResult();
-        //locationManager.requestLocationUpdates("gps", 5000, (float) 5.0, locationListener);
-
-        //if user is not signed in
+        //if user is not signed in(FireBase)
         if(firebaseAuth.getCurrentUser() == null){
             Intent intent = new Intent(main_page1.this, MainActivity.class);
             main_page1.this.startActivity(intent);
@@ -247,9 +177,9 @@ public class main_page1 extends AppCompatActivity {
 
     }
 
+    //End of Bundle State
 
 
-    //End of Bundle Instances
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissiond[], int[] grantResults) {
         switch (requestCode){
@@ -260,7 +190,6 @@ public class main_page1 extends AppCompatActivity {
                 }
         }
     }
-
     private void configureButton() {
         locationManager.requestLocationUpdates("gps", 5000, (float) 5.0, locationListener);
     }
@@ -375,9 +304,6 @@ public class main_page1 extends AppCompatActivity {
     }
 
     public void reminderToWalk(){
-        //TODO
-        //use AlarmManager Library
-        //Create notification
 
         Intent intent = new Intent(getApplicationContext(), Notification_receiver.class);
         PendingIntent pt = PendingIntent.getBroadcast(getApplicationContext(), 100, intent,PendingIntent.FLAG_UPDATE_CURRENT);
@@ -415,13 +341,9 @@ public class main_page1 extends AppCompatActivity {
         return initial;
     }
 
+    //Get users work location Latitude
     public double getLociLat(){
-
         if(validate()){
-        //String userAddress = userWork.getText().toString().trim();
-        //double latitudeU;
-        //double longitudeU;
-
         userWork = (EditText)findViewById(R.id.workLocation);
 
         String userAddress= userWork.getText().toString().trim();
@@ -448,10 +370,8 @@ public class main_page1 extends AppCompatActivity {
     return 0.0;
     }
 
+    //Get Users Work Location Longitude
     public double getLociLong(){
-        //String userAddress = userWork.getText().toString().trim();
-        //double latitudeU;
-        //double longitudeU;
     if(validate()){
         userWork = (EditText)findViewById(R.id.workLocation);
 
