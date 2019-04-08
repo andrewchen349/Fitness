@@ -5,8 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText email, password; // Edit text for email and password
     private FirebaseAuth firebaseAuth; //google Firebase
     //private TextView mainDistance; //textview to display dispalnce on front page
+    private CheckBox showPassWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,19 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, main_page1.class);
             MainActivity.this.startActivity(intent);
         }
+
+        showPassWord.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+                else{
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
 
         //set up listener for register button
         register = (Button) findViewById(R.id.register);
@@ -74,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         password = (EditText)findViewById((R.id.password));
         login = (Button)findViewById((R.id.login));
         register = (Button)findViewById((R.id.register));
+        showPassWord = (CheckBox)findViewById((R.id.showPassword));
         //mainDistance = (TextView)findViewById(R.id.mainDistance);
     }
 

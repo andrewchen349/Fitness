@@ -37,6 +37,14 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/buttonstyle"
             android:hint=" Password" />
+
+        <CheckBox
+            android:id="@+id/showPassword"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Show Password" />
         <Button
             android:id="@+id/login"
             android:layout_width="130dp"

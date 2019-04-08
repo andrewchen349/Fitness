@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,6 +23,7 @@ public class Register extends AppCompatActivity {
     private EditText email, password;
     private Button register;
     private FirebaseAuth firebaseAuth;
+    private CheckBox showPassWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,20 @@ public class Register extends AppCompatActivity {
         defineId();
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        showPassWord.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+                else{
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
+
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +80,7 @@ public class Register extends AppCompatActivity {
         email = (EditText)findViewById(R.id.email);
         password = (EditText)findViewById((R.id.password));
         register = (Button)findViewById((R.id.register));
+        showPassWord = (CheckBox)findViewById((R.id.showPassword));
     }
 
     private Boolean validate(){

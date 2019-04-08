@@ -330,7 +330,8 @@ public class main_page1 extends AppCompatActivity {
 
         if( userAddress.isEmpty() )
         {
-            Toast.makeText(this,"Please Enter Your Work Location",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this,"Please Enter Your Work Location",Toast.LENGTH_SHORT).show();
+            return Boolean.FALSE;
         }
 
         else
