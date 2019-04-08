@@ -21,15 +21,12 @@ public class Notification_receiver extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, main_page1.CHANNEL_ID1);
         builder.setContentIntent(pendingIntent);
         builder.setSmallIcon(R.drawable.notilogo);
-        //builder.setTicker("Congrats You Have Walk 1000 ft");
-        //builder.setWhen(System.currentTimeMillis());
         builder.setContentTitle("Get Active!!");
         builder.setContentText("Walk Around for 5 Minutes");
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
         builder.setAutoCancel(true);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
-        //NotificationManager nm  = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManagerCompat.notify(100, builder.build());
     }
 }

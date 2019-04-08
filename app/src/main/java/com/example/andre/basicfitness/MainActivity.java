@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private Button login; //login Button
     private EditText email, password; // Edit text for email and password
     private FirebaseAuth firebaseAuth; //google Firebase
-    //private TextView mainDistance; //textview to display dispalnce on front page
     private CheckBox showPassWord;
 
     @Override
@@ -45,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.startActivity(intent);
         }
 
+        //Show/Hide Password When User is Typing
         showPassWord.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -74,10 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 userLogin();
             }
         });
-
-
-
-    }
+       }
 
     //opens register page
     public void openRegister() {
@@ -85,15 +82,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //link edit text field to variables
+    //Find all xml components
     public void defineId(){
-
         email = (EditText)findViewById(R.id.email);
         password = (EditText)findViewById((R.id.password));
         login = (Button)findViewById((R.id.login));
         register = (Button)findViewById((R.id.register));
         showPassWord = (CheckBox)findViewById((R.id.showPassword));
-        //mainDistance = (TextView)findViewById(R.id.mainDistance);
+
     }
 
 

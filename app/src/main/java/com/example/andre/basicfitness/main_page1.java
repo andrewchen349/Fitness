@@ -6,6 +6,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -110,6 +111,8 @@ public class main_page1 extends AppCompatActivity {
                 float [] results = new float[1];
 
                 Location.distanceBetween(lat, lon, getLociLat() , getLociLong(),results);
+                userWork.getText().clear();
+                //Toast.makeText(Context.SENSOR_SERVICE,"Registration Success",Toast.LENGTH_SHORT).show();
                 float dist = results[0];
                 //if distance between user is less than 0.1 meters
                 if(dist < 0.1){
@@ -228,8 +231,8 @@ public class main_page1 extends AppCompatActivity {
     private NotificationManagerCompat notificationManager;
     private static final int id = 12451;  //unique id for milestone Notification
 
+    //Method to build MileStone of 1000 Feet Notification
     public void mileStoneNotification1(){
-
         float totalDistance = calculateDistance((long) steps);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
         if(totalDistance == 1000){
@@ -303,11 +306,10 @@ public class main_page1 extends AppCompatActivity {
         }
     }
 
+    //Method to Remidn User to Walk every Hour at WorkLocation
     public void reminderToWalk(){
-
         Intent intent = new Intent(getApplicationContext(), Notification_receiver.class);
         PendingIntent pt = PendingIntent.getBroadcast(getApplicationContext(), 100, intent,PendingIntent.FLAG_UPDATE_CURRENT);
-        //builder.setContentIntent(pt);
 
         Calendar calendar = Calendar.getInstance();
         int currentHourIn24Format = calendar.get(Calendar.HOUR_OF_DAY);
@@ -317,16 +319,19 @@ public class main_page1 extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, currentMinIn24Format);
         calendar.set(Calendar.SECOND, currentSecIn24Format);
 
+        //set an alarm to repeate every Hour at the time user arrives at workLocation
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE); //intialize alarmManager
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),AlarmManager.INTERVAL_HOUR, pt);
     }
 
+    //Method to handle empty or filled textField
     private Boolean validate(){
         Boolean initial = false;
 
         userWork = (EditText)findViewById(R.id.workLocation);
 
         String userAddress= userWork.getText().toString().trim();
+        //userWork.getText().clear();
 
         if( userAddress.isEmpty() )
         {
@@ -360,6 +365,7 @@ public class main_page1 extends AppCompatActivity {
                 Address address = addresses.get(0);
                 if(addresses.size() > 0) {
                     latitudeU = addresses.get(0).getLatitude();
+                    userWork.getText().clear();
                     return latitudeU;
 
                 }

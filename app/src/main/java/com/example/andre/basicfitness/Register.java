@@ -33,6 +33,7 @@ public class Register extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        //Show/Hides Password When Typing
         showPassWord.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -46,14 +47,13 @@ public class Register extends AppCompatActivity {
             }
         });
 
-
+        //Handles Registration
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(validate())
                 {
                     //Upload data to google firebase
-
                     String acc_email = email.getText().toString().trim();
                     String pass = password.getText().toString().trim();
                     firebaseAuth.createUserWithEmailAndPassword(acc_email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -75,14 +75,15 @@ public class Register extends AppCompatActivity {
         });
     }
 
+    //define and initialize all XML components
     public void defineId(){
-
         email = (EditText)findViewById(R.id.email);
         password = (EditText)findViewById((R.id.password));
         register = (Button)findViewById((R.id.register));
         showPassWord = (CheckBox)findViewById((R.id.showPassword));
     }
 
+    //check if Edit Text fields are Empty, Handle Empty TextFields
     private Boolean validate(){
         Boolean initial = false;
 
@@ -102,6 +103,7 @@ public class Register extends AppCompatActivity {
         return initial;
     }
 
+    //Open Main Page of app, if Register is Successful
     public void openMain() {
         Intent intent = new Intent(Register.this, main_page1.class);
         Register.this.startActivity(intent);
