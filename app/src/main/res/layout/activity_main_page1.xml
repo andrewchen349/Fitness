@@ -21,7 +21,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:background="@drawable/buttonstyle"
-            android:hint=" Enter Work Location" />
+            android:hint=" Location ( #, Address, City)" />
         <TextView
             android:id="@+id/distance"
             android:gravity="center"

@@ -64,9 +64,10 @@ public class main_page1 extends AppCompatActivity {
     public TextView distanceTraveled; //Textview to display Distance Traveled
     private LocationManager locationManager;  //Initialize Location manager
     private LocationListener locationListener;
-    private boolean b = false;
+    //private boolean b = false;
     public static final String CHANNEL_ID = "ChannelNoti"; //CHANNEl_ID for milestones(NotificationChannel)
     public static final String CHANNEL_ID1 = "Work"; //Channel ID for reminder to walk Notification Channel
+    public String userAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,14 +110,12 @@ public class main_page1 extends AppCompatActivity {
                 double lat = location.getLatitude();  //get latitude of user
                 double lon = location.getLongitude();  //get longitude of user
                 float [] results = new float[1];
-
                 Location.distanceBetween(lat, lon, getLociLat() , getLociLong(),results);
                 userWork.getText().clear();
-                //Toast.makeText(Context.SENSOR_SERVICE,"Registration Success",Toast.LENGTH_SHORT).show();
                 float dist = results[0];
                 //if distance between user is less than 0.1 meters
-                if(dist < 0.1){
-                    b = true;
+                if(dist < 0.5){
+                    //b = true;
                     reminderToWalk();
                 }
             }
@@ -139,7 +138,7 @@ public class main_page1 extends AppCompatActivity {
             }
         };
 
-        locationManager.requestLocationUpdates("gps", 5000, (float) 5.0, locationListener);
+        locationManager.requestLocationUpdates("gps", 5000, (float) 1.0, locationListener);
 
         //permission user check
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -194,7 +193,7 @@ public class main_page1 extends AppCompatActivity {
         }
     }
     private void configureButton() {
-        locationManager.requestLocationUpdates("gps", 5000, (float) 5.0, locationListener);
+        locationManager.requestLocationUpdates("gps", 5000, (float) 1.0, locationListener);
     }
 
     //Handles stop and resume walking for Step Sensor
@@ -325,13 +324,13 @@ public class main_page1 extends AppCompatActivity {
     }
 
     //Method to handle empty or filled textField
+    //User Will Be Ask to Enter Work Location Everytime, if Work Loci Changes
     private Boolean validate(){
         Boolean initial = false;
 
         userWork = (EditText)findViewById(R.id.workLocation);
 
         String userAddress= userWork.getText().toString().trim();
-        //userWork.getText().clear();
 
         if( userAddress.isEmpty() )
         {
@@ -352,12 +351,12 @@ public class main_page1 extends AppCompatActivity {
         if(validate()){
         userWork = (EditText)findViewById(R.id.workLocation);
 
-        String userAddress= userWork.getText().toString().trim();
+         userAddress= userWork.getText().toString().trim();
 
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         double latitudeU;
-        double longitudeU;
         List<Address> addresses;
+
 
         {
             try {
@@ -365,7 +364,6 @@ public class main_page1 extends AppCompatActivity {
                 Address address = addresses.get(0);
                 if(addresses.size() > 0) {
                     latitudeU = addresses.get(0).getLatitude();
-                    userWork.getText().clear();
                     return latitudeU;
 
                 }
@@ -382,10 +380,9 @@ public class main_page1 extends AppCompatActivity {
     if(validate()){
         userWork = (EditText)findViewById(R.id.workLocation);
 
-        String userAddress= userWork.getText().toString().trim();
+        userAddress= userWork.getText().toString().trim();
 
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        double latitudeU;
         double longitudeU;
         List<Address> addresses;
 
