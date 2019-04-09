@@ -114,8 +114,7 @@ public class main_page1 extends AppCompatActivity {
                 userWork.getText().clear();
                 float dist = results[0];
                 //if distance between user is less than 0.1 meters
-                if(dist < 0.5){
-                    //b = true;
+                if(dist < 1){
                     reminderToWalk();
                 }
             }
@@ -311,7 +310,12 @@ public class main_page1 extends AppCompatActivity {
         PendingIntent pt = PendingIntent.getBroadcast(getApplicationContext(), 100, intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
-        int currentHourIn24Format = calendar.get(Calendar.HOUR_OF_DAY);
+        int currentHourIn24Format = calendar.get(Calendar.HOUR_OF_DAY) + 1;
+
+        //
+        if(currentHourIn24Format == 25){
+            currentHourIn24Format = 0;
+        }
         int currentMinIn24Format = calendar.get(Calendar.MINUTE);
         int currentSecIn24Format = calendar.get(Calendar.SECOND);
         calendar.set(Calendar.HOUR_OF_DAY, currentHourIn24Format);
