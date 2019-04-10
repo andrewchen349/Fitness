@@ -18,6 +18,7 @@ public class Notification_receiver extends BroadcastReceiver {
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context,100, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        //Builds Notification to Remind User to Walk Around Every Hour
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, main_page1.CHANNEL_ID1);
         builder.setContentIntent(pendingIntent);
         builder.setSmallIcon(R.drawable.notilogo);

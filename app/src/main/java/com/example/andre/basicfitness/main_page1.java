@@ -91,7 +91,6 @@ public class main_page1 extends AppCompatActivity {
                 }
                 if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
                     steps++;
-                    System.out.println(steps);
                     calculateDistance(steps);
                     getDistance();
                     mileStoneNotification1();
@@ -214,14 +213,12 @@ public class main_page1 extends AppCompatActivity {
     //Calculate total Distance Traveled
     public float calculateDistance(long steps){
         float totalDistance = (float)(steps*31)/(float)12; //calculate distance in miles
-        System.out.println("Total Distance: " + totalDistance);
         return totalDistance;
     }
 
     //Display Distance Traveled on MainScreen
     public void getDistance(){
         float totalDist = calculateDistance((long) steps);
-        //System.out.println(totalDist);
         distanceTraveled.setText(String.valueOf(totalDist + "feet"));
     }
 
@@ -304,7 +301,7 @@ public class main_page1 extends AppCompatActivity {
         }
     }
 
-    //Method to Remidn User to Walk every Hour at WorkLocation
+    //Method to Reminds User to Walk every Hour at WorkLocation
     public void reminderToWalk(){
         Intent intent = new Intent(getApplicationContext(), Notification_receiver.class);
         PendingIntent pt = PendingIntent.getBroadcast(getApplicationContext(), 100, intent,PendingIntent.FLAG_UPDATE_CURRENT);
@@ -355,7 +352,7 @@ public class main_page1 extends AppCompatActivity {
         if(validate()){
         userWork = (EditText)findViewById(R.id.workLocation);
 
-         userAddress= userWork.getText().toString().trim();
+        userAddress= userWork.getText().toString().trim();
 
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         double latitudeU;
